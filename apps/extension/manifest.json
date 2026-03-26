@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Memory Lane Saver",
+  "version": "0.1.0",
+  "description": "Save web items to Memory Lane.",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "Save to Memory Lane",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

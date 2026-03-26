@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: memory-lane-web
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install && npm --workspace apps/web run build
+    startCommand: npm --workspace apps/web run start
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE
+        value: https://memory-lane-api.onrender.com
+
+  - type: web
+    name: memory-lane-api
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm --workspace apps/api run start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_RESURFACE_MODEL
+        value: gpt-5-mini-2025-08-07
+      - key: OPENAI_EMBEDDING_MODEL
+        value: text-embedding-3-large
+      - key: DEV_AUTO_USER
+        value: "false"
+
+  - type: worker
+    name: memory-lane-worker
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm --workspace apps/worker run start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_TAG_MODEL
+        value: gpt-5-mini-2025-08-07
+      - key: OPENAI_EMBEDDING_MODEL
+        value: text-embedding-3-large
+      - key: STORAGE_PROVIDER
+        value: IMAGEKIT
+      - key: IMAGEKIT_PUBLIC_KEY
+        sync: false
+      - key: IMAGEKIT_PRIVATE_KEY
+        sync: false
+      - key: IMAGEKIT_URL_ENDPOINT
+        sync: false

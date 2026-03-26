@@ -1,0 +1,9 @@
+{
+  "name": "ai-extension-tool",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "echo 'Use workspace dev scripts, e.g. npm --workspace apps/api run dev'",
+    "lint": "echo 'Add linting later'"
+  }
+}
