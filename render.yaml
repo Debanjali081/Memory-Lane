@@ -49,11 +49,3 @@ services:
         value: gpt-5-mini-2025-08-07
       - key: OPENAI_EMBEDDING_MODEL
         value: text-embedding-3-large
-      - key: STORAGE_PROVIDER
-        value: IMAGEKIT
-      - key: IMAGEKIT_PUBLIC_KEY
-        sync: false
-      - key: IMAGEKIT_PRIVATE_KEY
-        sync: false
-      - key: IMAGEKIT_URL_ENDPOINT
-        sync: false

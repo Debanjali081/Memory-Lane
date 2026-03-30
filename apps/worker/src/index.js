@@ -2,7 +2,6 @@ import "dotenv/config";
 import { Worker } from "bullmq";
 import IORedis from "ioredis";
 import pg from "pg";
-import ImageKit from "imagekit";
 import * as cheerio from "cheerio";
 import dns from "dns";
 import { v4 as uuidv4 } from "uuid";
@@ -20,16 +19,6 @@ const redis = new IORedis(process.env.REDIS_URL, {
   maxRetriesPerRequest: null,
 });
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const storageProvider = (process.env.STORAGE_PROVIDER || "IMAGEKIT").toUpperCase();
-
-const imagekit =
-  storageProvider === "IMAGEKIT"
-    ? new ImageKit({
-        publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",
-        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "",
-        urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "",
-      })
-    : null;
 
 const openaiApiKey = process.env.OPENAI_API_KEY;
 const tagModel = process.env.OPENAI_TAG_MODEL || "gpt-5-mini-2025-08-07";
@@ -225,8 +214,6 @@ const worker = new Worker(
           extractionStatus,
           extractionError,
           extractionErrorCause,
-          storageProvider: storageProvider,
-          imagekitConfigured: Boolean(imagekit),
           tagCount: tags.length,
         },
       ]
